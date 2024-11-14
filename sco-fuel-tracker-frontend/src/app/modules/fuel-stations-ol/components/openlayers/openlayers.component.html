@@ -1,0 +1,9 @@
+<div 
+ id="map" 
+ class="map" 
+ [ngStyle]="{'height.px': height}" 
+ (click)="onClickMap($event)"
+ (pointermove)="onPointermove($event)" 
+>
+    <div id="popup"></div>
+</div>

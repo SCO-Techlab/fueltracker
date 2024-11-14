@@ -1,0 +1,143 @@
+<div class="container-fluid vh-100" [ngClass]="themeService.theme" scoResolution >
+  <div class="row theme-header" 
+    [ngClass]="{
+      'theme-header--showCacheTitle': navbarOptions.showCacheTitle,
+      'theme-header--not-showCacheTitle': !navbarOptions.showCacheTitle
+    }"
+  >
+    <div class="col-12 p-0">
+      <div class="row" *ngIf="navbarOptions.showBusinessText">
+        <div class="col-12 text-end">
+          <a class="bussiness-text" href="https://santiagocomerasoteo.es" target="_blank">
+            {{'Santiago Comeras Oteo'}}
+          </a>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="navbarOptions.showCacheTitle">
+        <div class="col-12 theme-header__cache-container">
+          <span class="theme-header__cache-container--cache-title">
+            {{(cacheService.getElement('title') ? cacheService.getElement('title') : '&nbsp;')}}
+          </span>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="navbarOptions.showMenu">
+        <div class="col-12 theme-header__menu-container"
+         *ngIf="(
+          navbarOptions.showMenu &&
+          navbarOptions.showLinealMenu &&
+          resolutionService.size == constantsService.ScoResolutionConstants.WEB &&
+          cacheService.getElement('menuItems').length <= 7
+         )"
+         >
+          <ul class="position-relative theme-header__menu" 
+            *ngFor="let item of cacheService.getElement('menuItems'); let i = index" (mouseleave)="onLeftMenu()">
+            <li>
+              <div class="btn theme-header__menu--menu-item" 
+               [ngClass]="{
+                'theme-header__menu--menu-item--sub-item-hover': activeHover && subMenuItems.length > 0 && selectedSubTitle == item.text,
+                'theme-header__menu--menu-item--first-only1': i == 0 && cacheService.getElement('menuItems').length == 1 && subMenuItems.length == 0,
+                'theme-header__menu--menu-item--first-only1-hover': i == 0 && subMenuItems.length > 0 && selectedSubTitle == item.text && cacheService.getElement('menuItems').length == 1,
+                'theme-header__menu--menu-item--first': i == 0 && cacheService.getElement('menuItems').length > 1,
+                'theme-header__menu--menu-item--first-hover': i == 0 && subMenuItems.length > 0 && selectedSubTitle == item.text && cacheService.getElement('menuItems').length > 1,
+                'theme-header__menu--menu-item--mid': i > 0 && i < (cacheService.getElement('menuItems').length - 1),
+                'theme-header__menu--menu-item--last': i == (cacheService.getElement('menuItems').length - 1) && cacheService.getElement('menuItems').length > 1,
+                'theme-header__menu--menu-item--last-hover': i == (cacheService.getElement('menuItems').length - 1) && subMenuItems.length > 0 && selectedSubTitle == item.text
+               }"
+               (click)="!item.children && onMenuItemClick(item)" (mouseenter)="onMenuItemHover(item)" >
+                <span>{{translateService.getTranslate(item.text)}}</span>
+                <i *ngIf="item.children" class="fa fa-caret-down menu-item-padding"></i>
+              </div>
+              
+              <div class="d-block position-absolute theme-header__sub-menu"
+                *ngIf="subMenuItems.length > 0 && selectedSubTitle == item.text" 
+                scoClickOutside [avoidFirstTime]="false" (clickOutSide)="onLeftMenu()" >
+                <ng-container *ngFor="let subItem of subMenuItems; let i = index" >
+                  <div class="btn theme-header__sub-menu--sub-menu-item"
+                   [ngClass]="{
+                    'theme-header__sub-menu--sub-menu-item--last': i == subMenuItems.length - 1
+                   }"
+                   (click)="onMenuItemClick(subItem)" >
+                    <span>{{translateService.getTranslate(subItem.text)}}</span>
+                  </div>
+                </ng-container>
+              </div>
+  
+            </li>
+          </ul>
+        </div>
+        <div class="col-12 text-end theme-header__menu-container"
+         *ngIf="((
+         (resolutionService.size != constantsService.ScoResolutionConstants.WEB) ||
+         (resolutionService.size == constantsService.ScoResolutionConstants.WEB &&  cacheService.getElement('menuItems').length > 7)
+         ) ||
+         !navbarOptions.showLinealMenu)"
+        >
+          <button class="btn btn-sco hamburguer-btn btn-sm" (click)="openBarsMenu()">
+            <i class="fa fa-bars" style="font-size: 20px; margin-top: 5px; font-weight: bold;"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <sco-detail *ngIf="showHamburguerMenu" (close)="closeBarsMenu()"
+      [showTitle]="false"
+      [clickOutsideEnabled]="true"
+      [showOverlay]="false"
+      [forceCloseNow]="hamburgerMenuForceClose" >
+
+      <h1 detail-title></h1>
+      <div detail-content class="theme-hamburguer-menu">
+        <div class="row theme-hamburguer-menu__header" (click)="onForceClose_Hamburguer()">
+          <div class="col-12 theme-hamburguer-menu__header--content">
+            <span class="theme-hamburguer-menu__header--content--text">Menu</span>
+          </div>
+        </div>
+        <div class="theme-hamburguer-menu__content">
+          <div class="row" *ngFor="let item of cacheService.getElement('menuItems'); let i = index"
+            (click)="onSelectHamburguerMenuAction(item)" >
+            <div class="col-12 theme-hamburguer-menu__content--item">
+              <div class="row theme-hamburguer-menu__content--item--content">
+                <div class="col-1 text-center">
+                  <i class="{{item.icon}} theme-hamburguer-menu__content--item--content--icon"></i>
+                </div>
+                <div class="col-11">
+                  <span class="theme-hamburguer-menu__content--item--content--text">{{ translateService.getTranslate(item.text) }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-12 theme-hamburguer-menu__content--submenu" *ngIf="selectedSubTitle == item.text && subMenuItems.length > 0">
+              <div class="row theme-hamburguer-menu__content--submenu--item" *ngFor="let subItem of subMenuItems; let i = index" (click)="onMenuItemClick_Hamburguer(subItem)">
+                <div class="col-12 theme-hamburguer-menu__content--submenu--item--content">
+                  <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-1 text-center">
+                      <i class="{{subItem.icon}} theme-hamburguer-menu__content--submenu--item--content--icon"></i>
+                    </div>
+                    <div class="col-10">
+                      <span class="theme-hamburguer-menu__content--submenu--item--content--text">{{ translateService.getTranslate(subItem.text) }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="row vh-100" (click)="onForceClose_Hamburguer()">
+        </div>
+      </div>
+    </sco-detail>
+  </div>
+  
+  <div class="row theme-content">
+    <div class="col-12" style="height: calc(100vh - 25px);">
+      <router-outlet content></router-outlet>
+    </div>
+  </div>
+</div>
+
+<sco-toast [orientation]="constantsService.ScoToastConstants.ORIENTATION_BOTTOM_RIGHT" [block]="true"></sco-toast>
+<sco-spinner [pathImg]="'assets/img/spinner_lib.gif'"></sco-spinner>

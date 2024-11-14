@@ -1,0 +1,25 @@
+.container-overflow {
+    overflow-y: auto; 
+    overflow-x: hidden;
+}
+
+.hamburguer-btn {
+    margin-right: 5px; 
+    margin-top: 2.5px;
+}
+
+.menu-item-padding {
+    padding-left: 7.5px;
+}
+
+.bussiness-text {
+    font-family: sco bold italic; 
+    color: lightgray !important; 
+    font-size: 11px; 
+    padding-right: 15px; 
+    text-decoration: none;
+
+    &:hover {
+        color: #FFF !important; 
+    }
+}

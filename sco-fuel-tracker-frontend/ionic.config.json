@@ -1,0 +1,17 @@
+{
+  "name": "sco-fuel-tracker",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {
+      "enabled": false
+    }
+  },
+  "type": "angular",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1000,
+      "launchAutoHide": false,
+      "showSpinner": true
+    }
+  }
+}

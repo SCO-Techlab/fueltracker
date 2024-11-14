@@ -1,0 +1,11 @@
+{
+    "title": "Fuel Tracker",
+    "theme": "theme-dark",
+    "pwdRecoveryExpire": 30,
+    "navbarOptions": {
+        "showBusinessText": true,
+        "showCacheTitle": false,
+        "showMenu": false,
+        "showLinealMenu": false
+    }
+}

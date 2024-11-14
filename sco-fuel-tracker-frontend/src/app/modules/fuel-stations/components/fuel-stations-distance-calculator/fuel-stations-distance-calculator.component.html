@@ -1,0 +1,233 @@
+<div class="row fuel-stations">
+  <div class="col-12">
+
+    <!-- Header -->
+    <div class="row mt-1 fuel-stations__header">
+      <div class="col-6" [hidden]="resolutionService.size == constantsService.ScoResolutionConstants.WEB">
+        <sco-toggle 
+          [inLine]="true"
+          [(ngModel)]="isMapTab"
+          [label]="('label.fuel-stations.distance-calculator.toggle.map' | scoTranslate)" >
+        </sco-toggle>
+      </div>
+      <div [ngClass]="{
+        'col-12': resolutionService.size == constantsService.ScoResolutionConstants.WEB,
+        'col-6': resolutionService.size != constantsService.ScoResolutionConstants.WEB,
+        'text-center': true
+      }">
+        <sco-dropdown 
+          [label]="('label.fuel-stations.distance-calculator.drowpdown.distance' | scoTranslate)"
+          [showLabel]="false"
+          [options]="inputDistanceOptions"
+          [(ngModel)]="inputDistanceValue"
+          (selectItem)="onChangeInputDistanceValue($event)" >
+
+          <ng-template itemTemplate let-item="item">
+            {{item.label}}
+          </ng-template>
+        </sco-dropdown>
+      </div>
+    </div>
+
+    <!-- Web Content -->
+    <div #webContent class="row mt-1 fuel-stations__content">
+      <div [hidden]="resolutionService.size != constantsService.ScoResolutionConstants.WEB && isMapTab" [ngClass]="{
+        'col-4': resolutionService.size == constantsService.ScoResolutionConstants.WEB,
+        'col-12': resolutionService.size != constantsService.ScoResolutionConstants.WEB
+      }">
+        <ng-container *ngIf="blockItems && blockItems.length > 0">
+          <sco-block-list-item *ngFor="let blockItem of blockItems | paginate: { itemsPerPage: elementsPerPage  , currentPage: currentPage }; let index = index"
+          [blockItem]="blockItem"
+          [id]="'block-item-' + index"
+          [showHeader]="true"
+          [showInfoAdditional]="false"
+          [showActions]="false"
+          [showBorder]="true"
+          [canSelectItems]="true"
+          [templateHeader]="templateHeader"
+          [templateInfoAdditional]="templateInfoAdditional"
+          [templateData]="templateData"
+          (click)="selectItem(blockItem)" >
+
+          <ng-template #templateInfoAdditional let-item="item">
+          </ng-template>
+
+          <ng-template #templateHeader let-item="item">
+            <div class="row">
+              <div class="col-12">
+                <div>
+                  <span class="block-list-span">
+                    {{item.Rotulo + " - " + item.Municipio + " (" + formatKilometersValue(item.kilometers_distance) + " KM)"}}
+                  </span>
+                </div>
+                <div>
+                  <span class="block-list-span">
+                    {{item.Direccion}}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+
+          <ng-template #templateData let-item="item"> 
+          </ng-template>
+          </sco-block-list-item>
+        </ng-container>
+        <ng-container *ngIf="isPageLoaded && (!blockItems || (blockItems && blockItems.length == 0))">
+          <div class="mt-1 text-center">
+            <span>No hay resultados que mostrar</span>
+          </div>
+        </ng-container>
+      </div>
+      <div style="margin-top: 10px; margin-bottom: 10px;" [hidden]="resolutionService.size != constantsService.ScoResolutionConstants.WEB && !isMapTab" [ngClass]="{
+        'col-8': resolutionService.size == constantsService.ScoResolutionConstants.WEB,
+        'col-12': resolutionService.size != constantsService.ScoResolutionConstants.WEB
+      }" >
+        <app-google-maps
+          [width]="'100%'"
+          [height]="googleMaps_height"
+          [latitude]="currentLatitude"
+          [longitude]="currentLongitude" 
+          [fuelStations]="mapFuelStations" >
+        </app-google-maps>
+      </div>
+    </div>
+
+    <!-- Pagination Controls -->
+    <div class="row fuel-stations__pagination" *ngIf="blockItems && blockItems.length > elementsPerPage">
+      <div class="col-12 fuel-stations__pagination--container">
+        <pagination-controls
+          [previousLabel]="''"
+          [nextLabel]="''"
+          (pageChange)="onChangePage($event)" >
+        </pagination-controls>
+      </div>
+    </div>
+
+    <!-- Prices Modal -->
+    <sco-modal 
+     [id]="'prices-modal'"
+     [type]="constantsService.ScoModalTypeConstants.INFO" 
+     [labelConfirm]="('label.fuel-stations.distance-calculator.prices-modal.confirm.btn' | scoTranslate)"
+     [labelClose]="('label.fuel-stations.distance-calculator.prices-modal.close.btn' |scoTranslate)"
+     [big]="false"
+     [sizeUnity]="constantsService.ScoModalTypeConstants.SIZE_UNITY_PERCENTAGE" 
+     [width]="width"
+     [height]="height">
+      <div modal-title>
+        <span *ngIf="selectedItem">
+          {{selectedItem.item.Rotulo + " - " + selectedItem.item.Municipio + " (" + formatKilometersValue(selectedItem.item.kilometers_distance) + " KM)"}}
+        </span>
+      </div>
+      <div modal-content>
+        <div class="row" *ngIf="selectedItem">
+          <div class="col-12 text-end">
+            <button class="btn btn-sco btn-sm" (click)="showFuelStationOnMap()"><i class="fa fa-map"></i></button>
+          </div>
+          <div class="col-12 mt-1">
+            <span class="font-weight-bold">{{'label.fuel-stations.distance-calculator.prices-modal.address' | scoTranslate}}</span>
+          </div>
+          <div class="col-12">
+            <span>{{selectedItem.item.Direccion}}</span>
+          </div>
+          <div class="col-12 prices-modal-span">
+            <span class="font-weight-bold">{{'label.fuel-stations.distance-calculator.prices-modal.timeTable' | scoTranslate}}</span>
+          </div>
+          <div class="col-12">
+            <span>{{selectedItem.item.Horario}}</span>
+          </div>
+        </div>
+
+        <div class="row table-container" *ngIf="selectedItem">
+          <div class="col-12" *ngIf="resolutionService.size == constantsService.ScoResolutionConstants.WEB">
+            <table class="table table-sm">
+              <thead>
+                <tr>
+                  <th scope="col" *ngIf="selectedItem.item.Precio_Gasoleo_A">
+                    {{'label.fuel-stations.distance-calculator.prices-modal.gasoleo.a' | scoTranslate}}
+                  </th>
+                  <th scope="col" *ngIf="selectedItem.item.Precio_Gasoleo_Premium">
+                    {{'label.fuel-stations.distance-calculator.prices-modal.gasoleo.a.premium' | scoTranslate}}
+                  </th>
+                  <th scope="col" *ngIf="selectedItem.item.Precio_Gasolina_95_E10">
+                    {{'label.fuel-stations.distance-calculator.prices-modal.gasolina.95.e10' | scoTranslate}}
+                  </th>
+                  <th scope="col" *ngIf="selectedItem.item.Precio_Gasolina_95_E5">
+                    {{'label.fuel-stations.distance-calculator.prices-modal.gasolina.95.e5' | scoTranslate}}
+                  </th>
+                  <th scope="col" *ngIf="selectedItem.item.Precio_Gasolina_95_E5_Premium">
+                    {{'label.fuel-stations.distance-calculator.prices-modal.gasolina.95.e5.premium' | scoTranslate}}
+                  </th>
+                  <th scope="col" *ngIf="selectedItem.item.Precio_Gasolina_98_E10">
+                    {{'label.fuel-stations.distance-calculator.prices-modal.gasolina.98.e10' | scoTranslate}}
+                  </th>
+                  <th scope="col" *ngIf="selectedItem.item.Precio_Gasolina_98_E5">
+                    {{'label.fuel-stations.distance-calculator.prices-modal.gasolina.98.e5' | scoTranslate}}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td *ngIf="selectedItem.item.Precio_Gasoleo_A">
+                    {{selectedItem.item.Precio_Gasoleo_A ? selectedItem.item.Precio_Gasoleo_A : '--'}}
+                  </td>
+                  <td *ngIf="selectedItem.item.Precio_Gasoleo_Premium">
+                    {{selectedItem.item.Precio_Gasoleo_Premium ? selectedItem.item.Precio_Gasoleo_Premium : '--'}}
+                  </td>
+                  <td *ngIf="selectedItem.item.Precio_Gasolina_95_E10">
+                    {{selectedItem.item.Precio_Gasolina_95_E10 ? selectedItem.item.Precio_Gasolina_95_E10 : '--'}}
+                  </td>
+                  <td *ngIf="selectedItem.item.Precio_Gasolina_95_E5">
+                    {{selectedItem.item.Precio_Gasolina_95_E5 ? selectedItem.item.Precio_Gasolina_95_E5 : '--'}}
+                  </td>
+                  <td *ngIf="selectedItem.item.Precio_Gasolina_95_E5_Premium">
+                    {{selectedItem.item.Precio_Gasolina_95_E5_Premium ? selectedItem.item.Precio_Gasolina_95_E5_Premium : '--'}}
+                  </td>
+                  <td *ngIf="selectedItem.item.Precio_Gasolina_98_E10">
+                    {{selectedItem.item.Precio_Gasolina_98_E10 ? selectedItem.item.Precio_Gasolina_98_E10 : '--'}}
+                  </td>
+                  <td *ngIf="selectedItem.item.Precio_Gasolina_98_E5">
+                    {{selectedItem.item.Precio_Gasolina_98_E5 ? selectedItem.item.Precio_Gasolina_98_E5 : '--'}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-12" *ngIf="resolutionService.size != constantsService.ScoResolutionConstants.WEB">
+            <ul class="info-list">
+              <li *ngIf="selectedItem.item.Precio_Gasoleo_A">
+                <span class="font-weight-bold">{{'label.fuel-stations.distance-calculator.prices-modal.gasoleo.a' | scoTranslate}}: &nbsp;</span>
+                <span>{{selectedItem.item.Precio_Gasoleo_A ? selectedItem.item.Precio_Gasoleo_A : '--'}}</span>
+              </li>
+              <li *ngIf="selectedItem.item.Precio_Gasoleo_Premium">
+                <span class="font-weight-bold">{{'label.fuel-stations.distance-calculator.prices-modal.gasoleo.a.premium' | scoTranslate}}: &nbsp;</span>
+                <span>{{selectedItem.item.Precio_Gasoleo_Premium ? selectedItem.item.Precio_Gasoleo_Premium : '--'}}</span>
+              </li>
+              <li *ngIf="selectedItem.item.Precio_Gasolina_95_E10">
+                <span class="font-weight-bold">{{'label.fuel-stations.distance-calculator.prices-modal.gasolina.95.e10' | scoTranslate}}: &nbsp;</span>
+                <span>{{selectedItem.item.Precio_Gasolina_95_E10 ? selectedItem.item.Precio_Gasolina_95_E10 : '--'}}</span>
+            </li>
+              <li *ngIf="selectedItem.item.Precio_Gasolina_95_E5">
+                <span class="font-weight-bold">{{'label.fuel-stations.distance-calculator.prices-modal.gasolina.95.e5' | scoTranslate}}: &nbsp;</span>
+                <span>{{selectedItem.item.Precio_Gasolina_95_E5 ? selectedItem.item.Precio_Gasolina_95_E5 : '--'}}</span>
+              </li>
+              <li *ngIf="selectedItem.item.Precio_Gasolina_95_E5_Premium">
+                <span class="font-weight-bold">{{'label.fuel-stations.distance-calculator.prices-modal.gasolina.95.e5.premium' | scoTranslate}}: &nbsp;</span>
+                <span>{{selectedItem.item.Precio_Gasolina_95_E5_Premium ? selectedItem.item.Precio_Gasolina_95_E5_Premium : '--'}}</span>
+              </li>
+              <li *ngIf="selectedItem.item.Precio_Gasolina_98_E10">
+                <span class="font-weight-bold">{{'label.fuel-stations.distance-calculator.prices-modal.gasolina.98.e10' | scoTranslate}}: &nbsp;</span>
+                <span>{{selectedItem.item.Precio_Gasolina_98_E10 ? selectedItem.item.Precio_Gasolina_98_E10 : '--'}}</span>
+              </li>
+              <li *ngIf="selectedItem.item.Precio_Gasolina_98_E5">
+                <span class="font-weight-bold">{{'label.fuel-stations.distance-calculator.prices-modal.gasolina.98.e5' | scoTranslate}}: &nbsp;</span>
+                <span>{{selectedItem.item.Precio_Gasolina_98_E5 ? selectedItem.item.Precio_Gasolina_98_E5 : '--'}}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div> 
+    </sco-modal>
+
+  </div>
+</div>  
