@@ -1,18 +1,21 @@
 {
-  "name": "sco-fuel-tracker",
+  "name": "fueltracker",
   "version": "0.0.0",
+  "author": {
+    "name": "Santiago Comeras Oteo (SCO Techlab) <sco.techlab@gmail.com>"
+  },
   "scripts": {
-    "install-frontend": "cd ./sco-fuel-tracker-frontend && npm i && cd ..",
-    "install-backend": "cd ./sco-fuel-tracker-backend && npm i && cd ..",
+    "install-frontend": "cd ./fueltracker-frontend && npm i && cd ..",
+    "install-backend": "cd ./fueltracker-backend && npm i && cd ..",
     "install": "concurrently \"npm run install-frontend\" \"npm run install-backend\"",
-    "run-frontend-dev": "cd ./sco-fuel-tracker-frontend && npm run start && cd ..",
-    "run-backend-dev": "cd ./sco-fuel-tracker-backend && npm run start:dev && cd ..",
+    "run-frontend-dev": "cd ./fueltracker-frontend && npm run start && cd ..",
+    "run-backend-dev": "cd ./fueltracker-backend && npm run start:dev && cd ..",
     "run-dev": "concurrently \"npm run run-frontend-dev\" \"npm run run-backend-dev\"",
-    "build-prod-frontend": "cd ./sco-fuel-tracker-frontend && npm run build:prod && cd ..",
-    "build-prod-backend": "cd ./sco-fuel-tracker-backend && npm run prebuild && npm run build && cd ..",
+    "build-prod-frontend": "cd ./fueltracker-frontend && npm run build:prod && cd ..",
+    "build-prod-backend": "cd ./fueltracker-backend && npm run prebuild && npm run build && cd ..",
     "build-prod": "concurrently \"npm run build-prod-frontend\" \"npm run build-prod-backend\"",
-    "cp-public": "copyfiles --flat ./sco-fuel-tracker-frontend/dist/* ./sco-fuel-tracker-backend/dist/public",
-    "pm2:run-backend-prod": "cd ./sco-fuel-tracker-backend && npm run pm2:start:prod && cd ..",
+    "cp-public": "copyfiles --flat ./fueltracker-frontend/dist/* ./fueltracker-backend/dist/public",
+    "pm2:run-backend-prod": "cd ./fueltracker-backend && npm run pm2:start:prod && cd ..",
     "pm2:run-prod": "npm run pm2:run-backend-prod"
   },
   "private": true,

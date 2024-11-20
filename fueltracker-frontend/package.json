@@ -1,7 +1,9 @@
 {
-  "name": "sco-fuel-tracker",
+  "name": "fueltracker-frontend",
   "version": "0.0.1",
-  "author": "",
+  "author": {
+    "name": "Santiago Comeras Oteo (SCO Techlab) <sco.techlab@gmail.com>"
+  },
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
