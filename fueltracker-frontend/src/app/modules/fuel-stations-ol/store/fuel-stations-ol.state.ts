@@ -1,7 +1,7 @@
 import { EstacionTerrestreResponse } from '../../../model/estacionTerrestreResponse';
 import { FuelStationsOlService } from '../fuel-stations-ol.service';
 import { EstacionTerrestre } from '../../../model/estacionTerrestre';
-import { ScoTranslateService } from 'sco-angular-components';
+import { ScoTranslateService } from '@sco-techlab/sco-angular-components';
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { catchError, map } from "rxjs/operators";

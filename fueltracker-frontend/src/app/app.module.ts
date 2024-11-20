@@ -10,7 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxsModule} from '@ngxs/store';
 import { NFC } from '@awesome-cordova-plugins/nfc/ngx';
 import { FuelStationsOlModule } from './modules/fuel-stations-ol/fuel-stations-ol.module';
-import { ScoAngularComponentsModule, ScoConfigService, ScoTranslateService  } from 'sco-angular-components';
+import { ScoAngularComponentsModule, ScoConfigService, ScoTranslateService  } from '@sco-techlab/sco-angular-components';
 
 export function configFactory(provider: ScoConfigService  ) {
   return () => provider.getDataFromJson('assets/config/data.json');

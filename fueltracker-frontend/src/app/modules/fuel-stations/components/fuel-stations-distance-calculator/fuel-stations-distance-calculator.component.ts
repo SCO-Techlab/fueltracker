@@ -6,7 +6,7 @@ import { FuelStationsState } from './../../store/fuel-stations.state';
 import { GetEstacionesTerrestres, GetEstacionesTerrestresMongo } from './../../store/fuel-stations.actions';
 import { Store } from '@ngxs/store';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ScoSelectItem, ScoToastService, ScoTranslateService, ScoCacheService, ScoBlockItem, ScoAction, ScoSelectedItem, ScoConstantsService, ScoModalService, ScoResolutionService, ScoSpinnerService } from 'sco-angular-components';
+import { ScoSelectItem, ScoToastService, ScoTranslateService, ScoCacheService, ScoBlockItem, ScoAction, ScoSelectedItem, ScoConstantsService, ScoModalService, ScoResolutionService, ScoSpinnerService } from '@sco-techlab/sco-angular-components';
 import { EstacionTerrestre } from '../../../../model/estacionTerrestre';
 
 @Component({

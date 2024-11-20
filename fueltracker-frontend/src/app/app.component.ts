@@ -1,4 +1,4 @@
-import { ScoCacheService, ScoConfigService, ScoConstantsService, ScoResolutionService, ScoThemeService, ScoTranslateService } from 'sco-angular-components';
+import { ScoCacheService, ScoConfigService, ScoConstantsService, ScoResolutionService, ScoThemeService, ScoTranslateService } from '@sco-techlab/sco-angular-components';
 import { Component } from '@angular/core';
 import { NavbarOptions } from './model/navbar';
 import { Title } from '@angular/platform-browser';

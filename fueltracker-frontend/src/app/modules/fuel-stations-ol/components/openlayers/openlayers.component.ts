@@ -5,7 +5,7 @@ import { EstacionTerrestre } from 'src/app/model/estacionTerrestre';
 import { Icon, Style } from 'ol/style.js';
 import { Vector as VectorSource } from 'ol/source.js';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer.js';
-import { ScoTranslateService } from 'sco-angular-components';
+import { ScoTranslateService } from '@sco-techlab/sco-angular-components';
 import Overlay from 'ol/Overlay.js';
 import Feature from 'ol/Feature.js';
 import Map from 'ol/Map';

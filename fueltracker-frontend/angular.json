@@ -30,18 +30,16 @@
                 "input": "node_modules/ionicons/dist/ionicons/svg",
                 "output": "./svg"
               },
-              {"glob": "**/*", "input": "node_modules/sco-angular-components/resources/img", "output": "resources/img/"}
+              {"glob": "**/*", "input": "node_modules/@sco-techlab/sco-angular-components/resources/img", "output": "resources/img/"}
             ],
             "styles": [
               "src/theme/variables.scss", 
               "src/global.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/font-awesome/css/font-awesome.min.css",
-              "node_modules/sco-angular-components/resources/scss/sco-styles.scss",
-              "node_modules/sco-angular-components/resources/scss/font.scss",
-              "node_modules/sco-angular-components/resources/themes/theme-default.scss",
-              "node_modules/sco-angular-components/resources/themes/theme-dark.scss",
-              "node_modules/sco-angular-components/resources/themes/theme-blue.scss",
+              "node_modules/@sco-techlab/sco-angular-components/resources/scss/sco-styles.scss",
+              "node_modules/@sco-techlab/sco-angular-components/resources/scss/font.scss",
+              "node_modules/@sco-techlab/sco-angular-components/resources/themes/theme-dark.scss",
               "node_modules/ol/ol.css"
             ],
             "scripts": [
@@ -147,19 +145,13 @@
                 "glob": "**/*.svg",
                 "input": "node_modules/ionicons/dist/ionicons/svg",
                 "output": "./svg"
-              },
-              {"glob": "**/*", "input": "node_modules/sco-angular-components/resources/img", "output": "resources/img/"}
+              }
             ],
             "styles": [
               "src/theme/variables.scss", 
               "src/global.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/font-awesome/css/font-awesome.min.css",
-              "node_modules/sco-angular-components/resources/scss/sco-styles.scss",
-              "node_modules/sco-angular-components/resources/scss/font.scss",
-              "node_modules/sco-angular-components/resources/themes/theme-default.scss",
-              "node_modules/sco-angular-components/resources/themes/theme-dark.scss",
-              "node_modules/sco-angular-components/resources/themes/theme-blue.scss",
               "node_modules/ol/ol.css"
             ],
             "scripts": [

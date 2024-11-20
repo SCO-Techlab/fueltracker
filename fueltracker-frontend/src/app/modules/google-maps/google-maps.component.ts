@@ -1,5 +1,5 @@
 import { Utils } from './../../utils/utils';
-import { ScoResolutionService, ScoConstantsService, ScoTranslateService } from 'sco-angular-components';
+import { ScoResolutionService, ScoConstantsService, ScoTranslateService } from '@sco-techlab/sco-angular-components';
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';

@@ -2,18 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { EnumToArrayPipe } from './pipes/loop-enum.pipe';
-import { EnumToArrayNotDividing } from './pipes/enum.pipe';
-import { ExistsElementPipe } from './pipes/exists-element.pipe';
+import { EnumToArrayPipe } from './loop-enum.pipe';
+import { EnumToArrayNotDividing } from './enum.pipe';
+import { ExistsElementPipe } from './exists-element.pipe';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
-import { ScoAngularComponentsModule } from 'sco-angular-components';
 
 @NgModule({
   imports: [
     CommonModule,
     IonicModule,
     FormsModule,
-    ScoAngularComponentsModule,
     PdfViewerModule
   ],
   declarations: [

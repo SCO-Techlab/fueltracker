@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ScoAngularComponentsModule, ScoJoinPipe } from 'sco-angular-components';
+import { ScoAngularComponentsModule, ScoJoinPipe } from '@sco-techlab/sco-angular-components';
 import { NgxsModule } from '@ngxs/store';
 import { FuelStationsService } from './fuel-stations.service';
 import { FuelStationsDistanceCalculatorComponent } from './components/fuel-stations-distance-calculator/fuel-stations-distance-calculator.component';

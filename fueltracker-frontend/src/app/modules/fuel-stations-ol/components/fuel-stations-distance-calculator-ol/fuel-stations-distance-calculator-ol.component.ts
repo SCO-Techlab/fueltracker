@@ -3,7 +3,7 @@ import { cloneDeep } from 'lodash-es';
 import { EstacionTerrestreResponse } from '../../../../model/estacionTerrestreResponse';
 import { Store } from '@ngxs/store';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ScoSelectItem, ScoToastService, ScoTranslateService, ScoCacheService, ScoBlockItem, ScoAction, ScoSelectedItem, ScoConstantsService, ScoModalService, ScoResolutionService, ScoSpinnerService } from 'sco-angular-components';
+import { ScoSelectItem, ScoToastService, ScoTranslateService, ScoCacheService, ScoBlockItem, ScoAction, ScoSelectedItem, ScoConstantsService, ScoModalService, ScoResolutionService, ScoSpinnerService } from '@sco-techlab/sco-angular-components';
 import { EstacionTerrestre } from '../../../../model/estacionTerrestre';
 import { GetEstacionesTerrestresOl } from '../../store/fuel-stations-ol.actions';
 import { FuelStationsOlState } from '../../store/fuel-stations-ol.state';

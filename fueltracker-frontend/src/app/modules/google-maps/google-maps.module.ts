@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { GoogleMapsComponent } from './google-maps.component';
 import { HttpClientJsonpModule } from '@angular/common/http';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { ScoAngularComponentsModule } from 'sco-angular-components';
+import { ScoAngularComponentsModule } from '@sco-techlab/sco-angular-components';
 
 @NgModule({
   imports: [
