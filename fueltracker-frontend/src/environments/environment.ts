@@ -2,7 +2,7 @@ const environment = {
   name: 'dev',
   production: false,
   apiUrl: 'http://localhost:3300/api/v1',
-  socketUrl: 'ws://localhost:3001',
+  socketUrl: 'ws://localhost:3300',
   httpsEnabled: false,
 };
 

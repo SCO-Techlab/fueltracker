@@ -2,7 +2,7 @@ const environment = {
   name: 'prod',
   production: true,
   apiUrl: 'http://fueltracker.sco-techlab.es:3300/api/v1',
-  socketUrl: 'ws://fueltracker.sco-techlab.es:3301',
+  socketUrl: 'ws://fueltracker.sco-techlab.es:3300',
   httpsEnabled: true,
 };
 
