@@ -1,4 +1,3 @@
-import { SharedModule } from './modules/shared/shared.module';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -9,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxsModule} from '@ngxs/store';
 import { NFC } from '@awesome-cordova-plugins/nfc/ngx';
-import { FuelStationsOlModule } from './modules/fuel-stations-ol/fuel-stations-ol.module';
+import { FuelStationsOlModule } from './fuel-stations-ol/fuel-stations-ol.module';
 import { ScoAngularComponentsModule, ScoConfigService, ScoTranslateService  } from '@sco-techlab/sco-angular-components';
 
 export function configFactory(provider: ScoConfigService  ) {
@@ -32,7 +31,6 @@ export function translateFactory(provider: ScoTranslateService) {
     NgxsModule.forRoot([]),
     ScoAngularComponentsModule,
     HttpClientModule,
-    SharedModule,
     FuelStationsOlModule,
   ],
   providers: [

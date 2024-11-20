@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { FuelStationsDistanceCalculatorOlComponent } from './modules/fuel-stations-ol/components/fuel-stations-distance-calculator-ol/fuel-stations-distance-calculator-ol.component';
+import { FuelStationsDistanceCalculatorOlComponent } from './fuel-stations-ol/components/fuel-stations-distance-calculator-ol/fuel-stations-distance-calculator-ol.component';
 
 const routes: Routes = [
   {

@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { NavbarOptions } from './model/navbar';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { Store } from '@ngxs/store';
 import environment from 'src/environments/environment';
 
 @Component({
@@ -36,8 +35,7 @@ export class AppComponent {
     public readonly constantsService: ScoConstantsService,
     public readonly translateService: ScoTranslateService,
     public readonly resolutionService: ScoResolutionService,
-    private readonly router: Router,
-    private readonly store: Store
+    private readonly router: Router
   ) {
     this.cacheService.setElement("title", ' ');
     this.themeService.changeTheme(this.configService.getData('theme'));

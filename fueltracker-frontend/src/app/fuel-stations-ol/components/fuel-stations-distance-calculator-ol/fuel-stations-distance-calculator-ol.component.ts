@@ -1,20 +1,19 @@
-import { Utils } from './../../../../utils/utils';
-import { GoogleMapsComponent } from './../../../google-maps/google-maps.component';
+import { Utils } from '../../../utils/utils';
 import { cloneDeep } from 'lodash-es';
-import { EstacionTerrestreResponse } from '../../../../model/estacionTerrestreResponse';
-import { FuelStationsState } from './../../store/fuel-stations.state';
-import { GetEstacionesTerrestres, GetEstacionesTerrestresMongo } from './../../store/fuel-stations.actions';
+import { EstacionTerrestreResponse } from '../../../model/estacionTerrestreResponse';
 import { Store } from '@ngxs/store';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ScoSelectItem, ScoToastService, ScoTranslateService, ScoCacheService, ScoBlockItem, ScoAction, ScoSelectedItem, ScoConstantsService, ScoModalService, ScoResolutionService, ScoSpinnerService } from '@sco-techlab/sco-angular-components';
-import { EstacionTerrestre } from '../../../../model/estacionTerrestre';
+import { EstacionTerrestre } from '../../../model/estacionTerrestre';
+import { GetEstacionesTerrestresOl } from '../../store/fuel-stations-ol.actions';
+import { FuelStationsOlState } from '../../store/fuel-stations-ol.state';
 
 @Component({
-  selector: 'app-fuel-stations-distance-calculator',
-  templateUrl: './fuel-stations-distance-calculator.component.html',
-  styleUrls: ['./fuel-stations-distance-calculator.component.scss']
+  selector: 'app-fuel-stations-distance-calculator-ol',
+  templateUrl: './fuel-stations-distance-calculator-ol.component.html',
+  styleUrls: ['./fuel-stations-distance-calculator-ol.component.scss']
 })
-export class FuelStationsDistanceCalculatorComponent implements OnInit, AfterViewInit {
+export class FuelStationsDistanceCalculatorOlComponent implements OnInit, AfterViewInit {
 
   public isPageLoaded: boolean;
 
@@ -45,6 +44,8 @@ export class FuelStationsDistanceCalculatorComponent implements OnInit, AfterVie
   /* Modal */
   public width: string;
   public height: string;
+
+  public cleanPopup: boolean = false;
 
   /* ViewChilds */
   @ViewChild('webContent') webContent: ElementRef;
@@ -118,25 +119,27 @@ export class FuelStationsDistanceCalculatorComponent implements OnInit, AfterVie
     this.elementsPerPage = Number.parseInt(String((webContentHeight / 75) - 1));
     
     // Get Estaciones Terrestres
-    this.store.dispatch(new GetEstacionesTerrestres()).subscribe({
+    this.store.dispatch(new GetEstacionesTerrestresOl()).subscribe({
       next: async () => {
-        const success: boolean = this.store.selectSnapshot(FuelStationsState.success);
+        const success: boolean = this.store.selectSnapshot(FuelStationsOlState.success);
 
         if (!success) {
+          this.spinnerService.hideSpinner();
           this.toastService.addErrorMessage(
             this.translateService.getTranslate("label.error.title"),
-            this.store.selectSnapshot(FuelStationsState.errorMsg),
+            this.store.selectSnapshot(FuelStationsOlState.errorMsg),
           );
           return;
         }
 
-       this.currentResponse = this.store.selectSnapshot(FuelStationsState.estacionTerrestreResponse);
+        this.currentResponse = this.store.selectSnapshot(FuelStationsOlState.estacionTerrestreResponse);
         await this.calculateUserGeolocation();
       },
       error: () => {
+        this.spinnerService.hideSpinner();
         this.toastService.addErrorMessage(
           this.translateService.getTranslate("label.error.title"),
-          this.store.selectSnapshot(FuelStationsState.errorMsg),
+          this.store.selectSnapshot(FuelStationsOlState.errorMsg),
         );
       },
     });
@@ -145,6 +148,7 @@ export class FuelStationsDistanceCalculatorComponent implements OnInit, AfterVie
   /* Calculate Users Geolocation */
   async calculateUserGeolocation() {
     if (!navigator || (navigator && !navigator.geolocation)) {
+      this.spinnerService.hideSpinner();
       this.toastService.addErrorMessage(
         this.translateService.getTranslate('label.error.title'),
         this.translateService.getTranslate('label.fuel-stations.distance-calculator.browser-not-geolocation')
@@ -306,10 +310,21 @@ export class FuelStationsDistanceCalculatorComponent implements OnInit, AfterVie
   /* Load Map Info Window Of Selected Fuel Station */
   showFuelStationOnMap() {
     this.selectedItemMap = this.selectedItem.item;
-
-    GoogleMapsComponent.openOnMap(this.selectedItemMap);
     this.isMapTab = true;
-
     this.modalService.close('prices-modal');
+  }
+
+  selectMapItem($event: boolean) {
+    if ($event) {
+      this.selectedItemMap = undefined;
+    }
+  }
+
+  /* Toggle map */
+  toggleMap($event: boolean) {
+    if (!$event) {
+      this.selectedItemMap = undefined;
+      this.cleanPopup = !this.cleanPopup;   
+    }
   }
 }

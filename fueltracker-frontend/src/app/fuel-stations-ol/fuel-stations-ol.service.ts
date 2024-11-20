@@ -1,24 +1,24 @@
-import { EstacionTerrestreResponse } from '../../model/estacionTerrestreResponse';
+import { EstacionTerrestreResponse } from '../model/estacionTerrestreResponse';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import environment from 'src/environments/environment';
-import { EstacionTerrestre } from '../../model/estacionTerrestre';
+import { EstacionTerrestre } from '../model/estacionTerrestre';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FuelStationsService {
+export class FuelStationsOlService {
 
   constructor(
     private readonly http: HttpClient,
   ) {}
 
-  getEstacionesTerrestres(): Observable<EstacionTerrestreResponse> {
+  getEstacionesTerrestresOl(): Observable<EstacionTerrestreResponse> {
     return this.http.get<EstacionTerrestreResponse>(environment.apiUrl + `/estacionesTerrestres/estacionesTerrestres`);
   }
 
-  getEstacionesTerrestresMongo(): Observable<EstacionTerrestre[]> {
+  getEstacionesTerrestresMongoOl(): Observable<EstacionTerrestre[]> {
     return this.http.get<EstacionTerrestre[]>(environment.apiUrl + `/estacionesTerrestres/estacionesTerrestresMongo`);
   }
 }

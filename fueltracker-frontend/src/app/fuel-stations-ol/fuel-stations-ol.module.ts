@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ScoAngularComponentsModule, ScoJoinPipe } from '@sco-techlab/sco-angular-components';
 import { NgxsModule } from '@ngxs/store';
-import { AppGoogleMapsModule } from '../google-maps/google-maps.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FuelStationsDistanceCalculatorOlComponent } from './components/fuel-stations-distance-calculator-ol/fuel-stations-distance-calculator-ol.component';
 import { FuelStationsOlState } from './store/fuel-stations-ol.state';
@@ -20,7 +19,6 @@ import { OpenlayersComponent } from './components/openlayers/openlayers.componen
         FuelStationsOlState
       ]
     ),
-    AppGoogleMapsModule,
     NgxPaginationModule,
   ],
   declarations: [

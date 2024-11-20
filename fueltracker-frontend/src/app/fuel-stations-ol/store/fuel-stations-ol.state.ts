@@ -1,13 +1,13 @@
-import { EstacionTerrestreResponse } from '../../../model/estacionTerrestreResponse';
-import { FuelStationsService } from './../fuel-stations.service';
-import { EstacionTerrestre } from '../../../model/estacionTerrestre';
+import { EstacionTerrestreResponse } from '../../model/estacionTerrestreResponse';
+import { FuelStationsOlService } from '../fuel-stations-ol.service';
+import { EstacionTerrestre } from '../../model/estacionTerrestre';
 import { ScoTranslateService } from '@sco-techlab/sco-angular-components';
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { catchError, map } from "rxjs/operators";
-import { GetEstacionesTerrestres, GetEstacionesTerrestresMongo } from './fuel-stations.actions';
+import { GetEstacionesTerrestresMongoOl, GetEstacionesTerrestresOl } from './fuel-stations-ol.actions';
 
-export class FuelStationsStateModel {
+export class FuelStationsOlStateModel {
   estacionesTerrestres: EstacionTerrestre[];
   estacionTerrestreResponse: EstacionTerrestreResponse;
   success: boolean;
@@ -15,7 +15,7 @@ export class FuelStationsStateModel {
   successMsg: string;
 }
 
-export const FuelStationsStateDefault: FuelStationsStateModel = {
+export const FuelStationsOlStateDefault: FuelStationsOlStateModel = {
   estacionesTerrestres: [],
   estacionTerrestreResponse: undefined,
   success: false,
@@ -23,51 +23,51 @@ export const FuelStationsStateDefault: FuelStationsStateModel = {
   successMsg: '',
 };
 
-@State<FuelStationsStateModel>({
-  name: "fuelStations",
-  defaults: FuelStationsStateDefault,
+@State<FuelStationsOlStateModel>({
+  name: "fuelStationsol",
+  defaults: FuelStationsOlStateDefault,
 })
 
 @Injectable()
-export class FuelStationsState {
+export class FuelStationsOlState {
 
   constructor(
     private readonly translateService: ScoTranslateService,
-    private readonly fuelStationsService: FuelStationsService,
+    private readonly fuelStationsOlService: FuelStationsOlService,
   ) {
     
   }
 
   @Selector()
-  static estacionesTerrestres(state: FuelStationsStateModel): EstacionTerrestre[] {
+  static estacionesTerrestres(state: FuelStationsOlStateModel): EstacionTerrestre[] {
     return state.estacionesTerrestres;
   }
 
   @Selector()
-  static estacionTerrestreResponse(state: FuelStationsStateModel): EstacionTerrestreResponse {
+  static estacionTerrestreResponse(state: FuelStationsOlStateModel): EstacionTerrestreResponse {
     return state.estacionTerrestreResponse;
   }
 
   @Selector()
-  static success(state: FuelStationsStateModel): boolean {
+  static success(state: FuelStationsOlStateModel): boolean {
     return state.success;
   }
 
   @Selector()
-  static errorMsg(state: FuelStationsStateModel): string {
+  static errorMsg(state: FuelStationsOlStateModel): string {
     return state.errorMsg;
   }
 
   @Selector()
-  static successMsg(state: FuelStationsStateModel): string {
+  static successMsg(state: FuelStationsOlStateModel): string {
     return state.successMsg;
   }
   
-  @Action(GetEstacionesTerrestres)
-  public getEstacionesTerrestres (
-    { patchState }: StateContext<FuelStationsStateModel>,
+  @Action(GetEstacionesTerrestresOl)
+  public getEstacionesTerrestresOl (
+    { patchState }: StateContext<FuelStationsOlStateModel>,
   ) {
-    return this.fuelStationsService.getEstacionesTerrestres().pipe(
+    return this.fuelStationsOlService.getEstacionesTerrestresOl().pipe(
       map((estacionTerrestreResponse: EstacionTerrestreResponse) => {
         patchState({
           success: true,
@@ -87,11 +87,11 @@ export class FuelStationsState {
     );
   }
 
-  @Action(GetEstacionesTerrestresMongo)
-  public getEstacionesTerrestresMongo (
-    { patchState }: StateContext<FuelStationsStateModel>,
+  @Action(GetEstacionesTerrestresMongoOl)
+  public getEstacionesTerrestresMongoOl (
+    { patchState }: StateContext<FuelStationsOlStateModel>,
   ) {
-    return this.fuelStationsService.getEstacionesTerrestresMongo().pipe(
+    return this.fuelStationsOlService.getEstacionesTerrestresMongoOl().pipe(
       map((estacionesTerrestres: EstacionTerrestre[]) => {
         patchState({
           success: true,

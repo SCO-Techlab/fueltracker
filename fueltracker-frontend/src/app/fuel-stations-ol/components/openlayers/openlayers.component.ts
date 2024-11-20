@@ -1,4 +1,4 @@
-import { Utils } from './../../../../utils/utils';
+import { Utils } from '../../../utils/utils';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { OSM } from 'ol/source';
 import { EstacionTerrestre } from 'src/app/model/estacionTerrestre';
